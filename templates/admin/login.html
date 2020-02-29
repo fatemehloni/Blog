@@ -4,6 +4,21 @@
 {% block content %}
 <h1>admin login</h1>
 <form action="{{ url_for('admin.login') }}" method="post">
+{%  with messages = get_flashed_messages(True) %}
+    {% if messages %}
+       <div class="row">
+
+           {% for message in messages %}
+               <div class="card {{ message[0] }}">
+                  <div class="section">
+                      {{ message[1] }}
+                  </div>
+               </div>
+           {% endfor %}
+
+       </div>
+    {% endif %}
+{% endwith %}
     {{ form.hidden_tag() }}
    email: {{ form.email }}<br>
    password: {{ form.password }}<br>
