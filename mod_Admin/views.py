@@ -1,5 +1,5 @@
 from . import admin
-from flask import session, render_template, request, abort
+from flask import session, render_template, request, abort,flash
 from mod_Users.forms import LoginForm
 from mod_Users.models import User
 
@@ -17,14 +17,16 @@ def login():
             abort(400)
         user = User.query.filter(User.email.ilike(f"{form.email.data}")).first()
         if not user:
-            return "incorrect user"
+            flash('incorrect user',category='error')
+            return render_template('admin/login.html', form=form)
         if not user.check_password(form.password.data):
-            return "incorrect password"
+            flash('incorrect password',category='error')
+            return render_template('admin/login.html', form=form)
         session['email'] = user.email
         session['user_id'] = user.id
         return "Login success"
-    if session.get('email') is not None:
-        return "You are already logged in."
+  #  if session.get('email') is not None:
+       # return "You are already logged in."
 
         print(user)
     return render_template('admin/login.html', form=form)
