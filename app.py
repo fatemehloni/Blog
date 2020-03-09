@@ -10,7 +10,9 @@ migrate= Migrate(app,db)
 from views import index
 from mod_Admin import admin
 from mod_Users import users
+from mod_blog import blog
 app.register_blueprint(admin)
 app.register_blueprint(users)
+app.register_blueprint(blog)
 if __name__ == '__main__':
     app.run()
